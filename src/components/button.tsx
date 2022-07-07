@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import { BUTTON_COLORS } from '~/constants/constants';
@@ -12,6 +12,7 @@ type ButtonProps = {
   color: ColorKeys;
   width?: string;
   onClick?: () => void;
+  type?: 'button' | 'submit';
 };
 
 const Btn = styled.button<{
@@ -30,7 +31,7 @@ const Btn = styled.button<{
   :hover {
     background-color: ${(props) => BUTTON_COLORS[props.color].hover};
   }
-  color: #333333;
+  color: ${(props) => props.theme.gray700};
 `;
 
 const Button: React.FC<ButtonProps> = ({
@@ -39,9 +40,10 @@ const Button: React.FC<ButtonProps> = ({
   color = 'blue',
   width,
   onClick,
+  type = 'button',
 }) => {
   return (
-    <Btn color={color} width={width} onClick={onClick}>
+    <Btn color={color} width={width} onClick={onClick} type={type}>
       {isLoading ? (
         <ReactLoading type='spin' width={28} height={28} />
       ) : (
