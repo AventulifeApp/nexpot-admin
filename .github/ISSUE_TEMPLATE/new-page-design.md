@@ -1,3 +1,12 @@
+---
+name: new-page-design
+about: 新規ページを作成する際のISSUEテンプレートです。
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## 概要
 
 ## 詳細
