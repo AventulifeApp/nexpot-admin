@@ -7,10 +7,10 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
-import { PullDown } from '~/components';
+import { TextArea } from '~/components';
 import { typedMemo } from '~/types/common';
 
-type RHFPullDownProps<TFormValues> = {
+type RHFTextInputProps<TFormValues> = {
   className?: string;
   name: Path<TFormValues>;
   labelProps: Omit<
@@ -20,35 +20,30 @@ type RHFPullDownProps<TFormValues> = {
     >,
     'htmlFor'
   >;
-  selectProps: Omit<
+  inputProps: Omit<
     React.DetailedHTMLProps<
-      React.SelectHTMLAttributes<HTMLSelectElement>,
-      HTMLSelectElement
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      HTMLTextAreaElement
     >,
-    'id' | 'name'
+    'id' | 'name' | 'defaultValue'
   > & {
     defaultValue?: PathValue<TFormValues, Path<TFormValues>>;
     rules?: RegisterOptions<TFormValues>;
   };
   errorText?: string;
   helperText?: string;
-  options: React.DetailedHTMLProps<
-    React.OptionHTMLAttributes<HTMLOptionElement>,
-    HTMLOptionElement
-  >[];
   width?: string;
 };
 
-const RHFPullDown = <TFormValues extends FieldValues>({
+const RHFTextInput = <TFormValues extends FieldValues>({
   className,
   name,
   labelProps,
-  selectProps: { defaultValue, rules, ...inputProps },
+  inputProps: { defaultValue, rules, ...inputProps },
   helperText,
   errorText,
-  options,
   width,
-}: RHFPullDownProps<TFormValues>) => {
+}: RHFTextInputProps<TFormValues>) => {
   const {
     setValue,
     register,
@@ -61,17 +56,16 @@ const RHFPullDown = <TFormValues extends FieldValues>({
   }, [defaultValue, name, setValue]);
 
   return (
-    <PullDown
+    <TextArea
       className={className}
       name={name}
       labelProps={labelProps}
-      selectProps={{ ...register(name, rules), ...inputProps }}
+      inputProps={{ ...register(name, rules), ...inputProps }}
       helperText={helperText}
       errorText={errorText || (errors?.[name]?.message as string)}
-      options={options}
       width={width}
     />
   );
 };
 
-export default typedMemo(RHFPullDown);
+export default typedMemo(RHFTextInput);

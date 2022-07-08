@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { Button, RhfPullDown, RhfTextInput } from '~/components';
+import { Button, RhfPullDown, RhfTextArea, RhfTextInput } from '~/components';
 
 const Div = styled.div`
   display: flex;
@@ -15,6 +15,7 @@ const ButtonContainer = styled.div`
 type FormValue = {
   username: string;
   gender: string;
+  description: string;
 };
 
 const Home: NextPage = () => {
@@ -49,7 +50,7 @@ const Home: NextPage = () => {
             <div>form</div>
             <RhfTextInput<FormValue>
               name='username'
-              labelProps={{ children: '表示名' }}
+              labelProps={{ children: 'ユーザー名' }}
               inputProps={{
                 rules: {
                   minLength: {
@@ -64,7 +65,7 @@ const Home: NextPage = () => {
             />
             <RhfPullDown<FormValue>
               name='gender'
-              labelProps={{ children: '表示名' }}
+              labelProps={{ children: '性別' }}
               selectProps={{
                 rules: {
                   required: '性別は必須です。',
@@ -75,6 +76,20 @@ const Home: NextPage = () => {
                 { value: 'male', label: '男性' },
                 { value: 'female', label: '女性' },
               ]}
+            />
+            <RhfTextArea<FormValue>
+              name='description'
+              labelProps={{ children: '説明' }}
+              inputProps={{
+                rules: {
+                  maxLength: {
+                    message: '100文字以内で入力してください。',
+                    value: 100,
+                  },
+                  required: '説明は必須です。',
+                },
+              }}
+              helperText='ヘルパーだよ'
             />
             <Button color='green' type='submit'>
               登録
