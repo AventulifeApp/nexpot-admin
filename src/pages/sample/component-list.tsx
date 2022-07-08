@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { Button, RhfTextInput } from '~/components';
+import { Button, RhfPullDown, RhfTextInput } from '~/components';
 
 const Div = styled.div`
   display: flex;
@@ -14,6 +14,7 @@ const ButtonContainer = styled.div`
 
 type FormValue = {
   username: string;
+  gender: string;
 };
 
 const Home: NextPage = () => {
@@ -39,8 +40,8 @@ const Home: NextPage = () => {
       </Div>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(({ username }) => {
-            console.log({ username });
+          onSubmit={methods.handleSubmit((value) => {
+            console.log({ value });
           })}
           noValidate
         >
@@ -55,12 +56,25 @@ const Home: NextPage = () => {
                     message: '3文字以上で入力してください',
                     value: 3,
                   },
-                  required: 'ユーザーネームは必須です',
+                  required: 'ユーザーネームは必須です。',
                 },
                 type: 'text',
-                defaultValue: 'たつお' || '',
               }}
               helperText='ヘルパーだよ'
+            />
+            <RhfPullDown<FormValue>
+              name='gender'
+              labelProps={{ children: '表示名' }}
+              selectProps={{
+                rules: {
+                  required: '性別は必須です。',
+                },
+              }}
+              helperText='ヘルパーだよ'
+              options={[
+                { value: 'male', label: '男性' },
+                { value: 'female', label: '女性' },
+              ]}
             />
             <Button color='green' type='submit'>
               登録
