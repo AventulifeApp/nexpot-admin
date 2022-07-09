@@ -25,8 +25,9 @@ const Btn = styled.button<{
   background-color: ${(props) => BUTTON_COLORS[props.color].color};
   ${(props) => props.width && 'width:' + props.width};
   border-radius: 4px;
-  border: none;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  border: ${(props) =>
+    props.color === 'clear' ? `1px solid ${props.theme.gray300}` : 'none'};
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   :hover {
     background-color: ${(props) => BUTTON_COLORS[props.color].hover};

@@ -17,6 +17,7 @@ export const theme = {
 };
 
 export const BUTTON_COLORS = {
+  clear: { color: '#fff', hover: '#f0f0f0' },
   red: { color: '#fe8c8c', hover: '#fe7474' },
   blue: { color: '#7fdff2', hover: '#52c4db' },
   green: { color: '#bfffb3', hover: '#87e875' },

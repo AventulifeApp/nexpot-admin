@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -21,14 +22,10 @@ const Content = styled.li`
   list-style: none;
 
   cursor: pointer;
+  color: ${(props) => props.theme.gray200};
   padding: 12px;
   :hover {
     background-color: ${(props) => props.theme.gray400};
-  }
-
-  > a {
-    text-decoration: none;
-    color: ${(props) => props.theme.gray200};
   }
 `;
 
@@ -45,14 +42,15 @@ const sideBarDatas = [
 ];
 
 const SiderBar: NextProps<SiderBarProps> = ({}) => {
+  const router = useRouter();
   return (
     <SideBarContainer>
       <Contents>
         {sideBarDatas.map((data) => {
           // TODO: 観光ルートの場合、権限によって遷移先を変更
           return (
-            <Content key={data.link}>
-              <Link href={data.link}>{data.title}</Link>
+            <Content key={data.link} onClick={() => router.push(data.link)}>
+              {data.title}
             </Content>
           );
         })}

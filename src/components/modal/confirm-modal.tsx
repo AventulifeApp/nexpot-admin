@@ -8,8 +8,8 @@ type ConfirmModalProps = {
   showModal: boolean;
   title: string;
   content: React.ReactNode | string;
+  closeButtonText: string;
   confirmButtonText: string;
-  cancelButtonText: string;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -39,8 +39,8 @@ const ConfirmModalProps: NextProps<ConfirmModalProps> = ({
   showModal,
   title,
   content,
+  closeButtonText,
   confirmButtonText,
-  cancelButtonText,
   onConfirm,
   onCancel,
 }) => {
@@ -51,12 +51,12 @@ const ConfirmModalProps: NextProps<ConfirmModalProps> = ({
         <ModalContent>{content}</ModalContent>
         <ModalButtonContainer>
           <ButtonContainer>
-            <Button color='red' width='120px' onClick={onCancel}>
-              {cancelButtonText}
+            <Button color='clear' width='120px' onClick={onCancel}>
+              {closeButtonText}
             </Button>
           </ButtonContainer>
           <ButtonContainer>
-            <Button color='green' width='120px' onClick={onConfirm}>
+            <Button color='red' width='120px' onClick={onConfirm}>
               {confirmButtonText}
             </Button>
           </ButtonContainer>

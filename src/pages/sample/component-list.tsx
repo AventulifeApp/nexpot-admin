@@ -141,9 +141,9 @@ const Home: NextPage = () => {
           あいうえお あいうえお あいうえおあいうえお あいうえお あいうえお
           あいうえお あいうえお あいうえお あいうえお あいうえお あいうえお
           あいうえお あいうえお`}
-          confirmButtonText={'登録'}
-          cancelButtonText={'閉じる'}
-          onConfirm={() => alert('登録しました')}
+          closeButtonText={'閉じる'}
+          confirmButtonText={'削除'}
+          onConfirm={() => alert('削除しました')}
           onCancel={() => setShowModal(false)}
         />
       </FormProvider>
