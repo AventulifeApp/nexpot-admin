@@ -5,8 +5,8 @@ const Div = styled.div`
   font-weight: bold;
 `;
 
-const Home: NextPage = () => {
-  return <Div>index</Div>;
+const StoreSelect: NextPage = () => {
+  return <Div>StoreSelect</Div>;
 };
 
-export default Home;
+export default StoreSelect;

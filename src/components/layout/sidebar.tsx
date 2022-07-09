@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -18,20 +19,29 @@ const Contents = styled.ul`
 
 const Content = styled.li`
   list-style: none;
-  color: ${(props) => props.theme.gray200};
+
   cursor: pointer;
   padding: 12px;
   :hover {
     background-color: ${(props) => props.theme.gray400};
   }
+
+  > a {
+    text-decoration: none;
+    color: ${(props) => props.theme.gray200};
+  }
 `;
 
 const sideBarDatas = [
-  { title: '契約会社', link: '' },
-  { title: '店舗', link: '' },
-  { title: 'レンタサイクル置場', link: '' },
-  { title: '店舗権限ユーザー', link: '' },
-  { title: '観光ルート', link: '' },
+  { title: '契約会社', link: '/company/list' },
+  { title: '店舗', link: '/company/select' },
+  { title: 'レンタサイクル置場', link: '/store/select?menu=rentalCycle' },
+  { title: '店舗権限ユーザー', link: '/store/select?menu=storeUser' },
+  {
+    title: '観光ルート',
+    link: '/store/select?menu=sightseeingRoute',
+    roleUrl: '/sightseeingRoute/list',
+  },
 ];
 
 const SiderBar: NextProps<SiderBarProps> = ({}) => {
@@ -39,7 +49,12 @@ const SiderBar: NextProps<SiderBarProps> = ({}) => {
     <SideBarContainer>
       <Contents>
         {sideBarDatas.map((data) => {
-          return <Content key={data.link}>{data.title}</Content>;
+          // TODO: 観光ルートの場合、権限によって遷移先を変更
+          return (
+            <Content key={data.link}>
+              <Link href={data.link}>{data.title}</Link>
+            </Content>
+          );
         })}
       </Contents>
     </SideBarContainer>
