@@ -8,6 +8,7 @@ import {
   RhfPullDown,
   RhfTextArea,
   RhfTextInput,
+  Table,
 } from '~/components';
 
 const Div = styled.div`
@@ -121,6 +122,34 @@ const Home: NextPage = () => {
             </Button>
           </Div>
         </form>
+        <Table
+          talbeData={[
+            [
+              { align: 'center', content: <>aaaa</> },
+              { align: 'left', content: 'fjlsdfjsdlkf' },
+              { align: 'right', content: <a href=''>編集画面</a> },
+              { align: 'center', content: <input type={'checkbox'} /> },
+            ],
+            [
+              { align: 'left', content: <></> },
+              { align: 'left', content: 'fjlsdfjsdlkf' },
+              { align: 'right', content: <a href=''>編集画面</a> },
+              { align: 'center', content: <input type={'checkbox'} /> },
+            ],
+            [
+              { align: 'left', content: <></> },
+              { align: 'left', content: 'fjlsdfjsdlkf' },
+              { align: 'right', content: <a href=''>編集画面</a> },
+              { align: 'center', content: <input type={'checkbox'} /> },
+            ],
+          ]}
+          headTableData={[
+            { title: '契約会社名', align: 'left', width: '100px' },
+            { title: '電話番号', align: 'left', width: '200px' },
+            { title: '' },
+            { title: '削除', align: 'center' },
+          ]}
+        />
         <Modal showModal={showModal}>
           <>
             <ModalTitle>モーダルタイトル</ModalTitle>
