@@ -1,7 +1,14 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { Button, RhfPullDown, RhfTextArea, RhfTextInput } from '~/components';
+import {
+  Button,
+  Modal,
+  RhfPullDown,
+  RhfTextArea,
+  RhfTextInput,
+} from '~/components';
 
 const Div = styled.div`
   display: flex;
@@ -12,6 +19,23 @@ const ButtonContainer = styled.div`
   margin-left: 12px;
 `;
 
+const ModalTitle = styled.h2`
+  color: ${(props) => props.theme.gray700};
+  margin: 0;
+`;
+
+const ModalContent = styled.p`
+  margin-top: 24px;
+  color: ${(props) => props.theme.gray700};
+  font-size: 14px;
+  text-align: left;
+`;
+
+const ModalButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
 type FormValue = {
   username: string;
   gender: string;
@@ -20,14 +44,15 @@ type FormValue = {
 
 const Home: NextPage = () => {
   const methods = useForm<FormValue>();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       <Div>
         <div>Buttons</div>
         <ButtonContainer>
-          <Button color='blue' width='120px'>
-            検索
+          <Button color='blue' width='120px' onClick={() => setShowModal(true)}>
+            モーダル表示
           </Button>
         </ButtonContainer>
         <ButtonContainer>
@@ -96,6 +121,38 @@ const Home: NextPage = () => {
             </Button>
           </Div>
         </form>
+        <Modal showModal={showModal}>
+          <>
+            <ModalTitle>モーダルタイトル</ModalTitle>
+            <ModalContent>
+              あいうえおあいうえおあいうえおあいうえおあいうえお あいうえお
+              あいうえお あいうえおあいうえお あいうえおあいうえお あいうえお
+              あいうえお あいうえお あいうえおあいうえお あいうえお あいうえお
+              あいうえお あいうえお あいうえお あいうえお あいうえお あいうえお
+              あいうえお あいうえお
+            </ModalContent>
+            <ModalButtonContainer>
+              <ButtonContainer>
+                <Button
+                  color='red'
+                  width='120px'
+                  onClick={() => setShowModal(false)}
+                >
+                  閉じる
+                </Button>
+              </ButtonContainer>
+              <ButtonContainer>
+                <Button
+                  color='green'
+                  width='120px'
+                  onClick={() => alert('登録しました')}
+                >
+                  登録
+                </Button>
+              </ButtonContainer>
+            </ModalButtonContainer>
+          </>
+        </Modal>
       </FormProvider>
     </>
   );
