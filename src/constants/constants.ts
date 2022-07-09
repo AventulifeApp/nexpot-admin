@@ -12,6 +12,8 @@ export const theme = {
   green: '#4ecb71',
   blue: '#85b6ff',
   error: '#ff0000',
+  headerHeight: '64px',
+  sidebarWidth: '200px',
 };
 
 export const BUTTON_COLORS = {

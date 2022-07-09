@@ -32,6 +32,7 @@ const TextAreaInput = styled.textarea<{ width: string }>`
   font-size: 14px;
   width: ${(props) => props.width};
   box-sizing: border-box;
+  padding: 4px 8px;
 `;
 
 const TextArea: NextProps<TextAreaProps> = ({
