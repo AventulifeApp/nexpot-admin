@@ -11,7 +11,8 @@ import ErrorText from './text/error-text';
 import HelperText from './text/helper-text';
 import InputLabel from './text/input-label';
 import Button from './button';
-import Modal from './modal';
+import BaseModal from './modal/base-modal';
+import ConfirmModal from './modal/confirm-modal';
 import Table from './table';
 
 export {
@@ -28,6 +29,7 @@ export {
   RhfTextInput,
   RhfTextArea,
   Button,
-  Modal,
+  BaseModal,
+  ConfirmModal,
   Table,
 };

@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import {
   Button,
-  Modal,
+  ConfirmModal,
   RhfPullDown,
   RhfTextArea,
   RhfTextInput,
@@ -18,23 +18,6 @@ const Div = styled.div`
 
 const ButtonContainer = styled.div`
   margin-left: 12px;
-`;
-
-const ModalTitle = styled.h2`
-  color: ${(props) => props.theme.gray700};
-  margin: 0;
-`;
-
-const ModalContent = styled.p`
-  margin-top: 24px;
-  color: ${(props) => props.theme.gray700};
-  font-size: 14px;
-  text-align: left;
-`;
-
-const ModalButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
 `;
 
 type FormValue = {
@@ -150,38 +133,19 @@ const Home: NextPage = () => {
             { title: '削除', align: 'center' },
           ]}
         />
-        <Modal showModal={showModal}>
-          <>
-            <ModalTitle>モーダルタイトル</ModalTitle>
-            <ModalContent>
-              あいうえおあいうえおあいうえおあいうえおあいうえお あいうえお
-              あいうえお あいうえおあいうえお あいうえおあいうえお あいうえお
-              あいうえお あいうえお あいうえおあいうえお あいうえお あいうえお
-              あいうえお あいうえお あいうえお あいうえお あいうえお あいうえお
-              あいうえお あいうえお
-            </ModalContent>
-            <ModalButtonContainer>
-              <ButtonContainer>
-                <Button
-                  color='red'
-                  width='120px'
-                  onClick={() => setShowModal(false)}
-                >
-                  閉じる
-                </Button>
-              </ButtonContainer>
-              <ButtonContainer>
-                <Button
-                  color='green'
-                  width='120px'
-                  onClick={() => alert('登録しました')}
-                >
-                  登録
-                </Button>
-              </ButtonContainer>
-            </ModalButtonContainer>
-          </>
-        </Modal>
+        <ConfirmModal
+          showModal={showModal}
+          title={'モーダルタイトル'}
+          content={`あいうえおあいうえおあいうえおあいうえおあいうえお あいうえお
+          あいうえお あいうえおあいうえお あいうえおあいうえお あいうえお
+          あいうえお あいうえお あいうえおあいうえお あいうえお あいうえお
+          あいうえお あいうえお あいうえお あいうえお あいうえお あいうえお
+          あいうえお あいうえお`}
+          confirmButtonText={'登録'}
+          cancelButtonText={'閉じる'}
+          onConfirm={() => alert('登録しました')}
+          onCancel={() => setShowModal(false)}
+        />
       </FormProvider>
     </>
   );

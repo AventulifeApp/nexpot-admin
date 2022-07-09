@@ -3,7 +3,7 @@ import React from 'react';
 import { NextProps } from '~/types/common';
 import styled from 'styled-components';
 
-type ModalProps = {
+type BaseModalProps = {
   children: JSX.Element;
   onClose?: () => void;
   showModal: boolean;
@@ -31,7 +31,11 @@ const ModalContainer = styled.div`
   text-align: center;
 `;
 
-const Modal: NextProps<ModalProps> = ({ children, onClose, showModal }) => {
+const BaseModal: NextProps<BaseModalProps> = ({
+  children,
+  onClose,
+  showModal,
+}) => {
   return (
     <Cover onClick={onClose} showModal={showModal}>
       <ModalContainer>{children}</ModalContainer>
@@ -39,4 +43,4 @@ const Modal: NextProps<ModalProps> = ({ children, onClose, showModal }) => {
   );
 };
 
-export default React.memo<NextProps<ModalProps>>(Modal);
+export default React.memo<NextProps<BaseModalProps>>(BaseModal);
