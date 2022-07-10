@@ -5,8 +5,8 @@ import { NextProps } from '~/types/common';
 
 type Align = 'left' | 'center' | 'right';
 
-type TableType = {
-  headTableData: { title: string; align?: Align; width?: string }[];
+export type TableType = {
+  tableHeadData: { title: string; align?: Align; width?: string }[];
   talbeData: { align?: Align; content: ReactNode | string }[][];
 };
 
@@ -34,14 +34,14 @@ const Td = styled.td<{ align?: Align }>`
 `;
 
 const BaseTable: NextProps<TableType> = ({
-  headTableData = [],
+  tableHeadData = [],
   talbeData = [],
 }) => {
   return (
     <Table>
       <THead>
         <Tr>
-          {headTableData.map(({ title, ...attr }) => (
+          {tableHeadData.map(({ title, ...attr }) => (
             <Th key={title} {...attr}>
               {title}
             </Th>

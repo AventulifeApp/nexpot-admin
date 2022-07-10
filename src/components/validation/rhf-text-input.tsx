@@ -33,6 +33,7 @@ type RHFTextInputProps<TFormValues> = {
   errorText?: string;
   helperText?: string;
   width?: string;
+  margin?: string;
 };
 
 const RHFTextInput = <TFormValues extends FieldValues>({
@@ -43,6 +44,7 @@ const RHFTextInput = <TFormValues extends FieldValues>({
   helperText,
   errorText,
   width,
+  margin,
 }: RHFTextInputProps<TFormValues>) => {
   const {
     setValue,
@@ -60,10 +62,11 @@ const RHFTextInput = <TFormValues extends FieldValues>({
       className={className}
       name={name}
       labelProps={labelProps}
-      inputProps={{ ...register(name, rules), ...inputProps }}
+      inputProps={{ ...register(name, rules), ...inputProps, type: 'text' }}
       helperText={helperText}
       errorText={errorText || (errors?.[name]?.message as string)}
       width={width}
+      margin={margin}
     />
   );
 };

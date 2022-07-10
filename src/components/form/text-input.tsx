@@ -23,10 +23,12 @@ type TextInputProps = {
   errorText?: string;
   helperText?: string;
   width?: string;
+  margin?: string;
 };
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ margin?: string }>`
   display: block;
+  ${(props) => props.margin && 'margin: ' + props.margin};
 `;
 
 const Input = styled.input<{ width: string }>`
@@ -46,9 +48,10 @@ const TextInput: NextProps<TextInputProps> = ({
   errorText,
   helperText,
   width = '120px',
+  margin,
 }) => {
   return (
-    <InputContainer>
+    <InputContainer margin={margin}>
       <InputLabel labelProps={{ ...labelProps, htmlFor: name }} />
       <br />
       <Input {...inputProps} id={name} name={name} width={width} />

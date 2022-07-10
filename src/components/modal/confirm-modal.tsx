@@ -1,17 +1,21 @@
 import React from 'react';
 
-import { NextProps } from '~/types/common';
+import { ButtonColors, NextProps } from '~/types/common';
 import styled from 'styled-components';
 import { BaseModal, Button } from '~/components';
+
+type ButtonParam = {
+  text: string;
+  onClick: () => void;
+  color: ButtonColors;
+};
 
 type ConfirmModalProps = {
   showModal: boolean;
   title: string;
   content: React.ReactNode | string;
-  closeButtonText: string;
-  confirmButtonText: string;
-  onConfirm?: () => void;
-  onCancel?: () => void;
+  leftButton: ButtonParam;
+  rightButton: ButtonParam;
 };
 
 const ModalTitle = styled.h2`
@@ -29,20 +33,15 @@ const ModalContent = styled.p`
 const ModalButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
-`;
-
-const ButtonContainer = styled.div`
-  margin-left: 12px;
+  margin-top: 40px;
 `;
 
 const ConfirmModalProps: NextProps<ConfirmModalProps> = ({
   showModal,
   title,
   content,
-  closeButtonText,
-  confirmButtonText,
-  onConfirm,
-  onCancel,
+  leftButton,
+  rightButton,
 }) => {
   return (
     <BaseModal showModal={showModal}>
@@ -50,16 +49,20 @@ const ConfirmModalProps: NextProps<ConfirmModalProps> = ({
         <ModalTitle>{title}</ModalTitle>
         <ModalContent>{content}</ModalContent>
         <ModalButtonContainer>
-          <ButtonContainer>
-            <Button color='clear' width='120px' onClick={onCancel}>
-              {closeButtonText}
-            </Button>
-          </ButtonContainer>
-          <ButtonContainer>
-            <Button color='red' width='120px' onClick={onConfirm}>
-              {confirmButtonText}
-            </Button>
-          </ButtonContainer>
+          <Button
+            color={leftButton.color}
+            width='120px'
+            onClick={leftButton.onClick}
+          >
+            {leftButton.text}
+          </Button>
+          <Button
+            color={rightButton.color}
+            width='120px'
+            onClick={rightButton.onClick}
+          >
+            {rightButton.text}
+          </Button>
         </ModalButtonContainer>
       </>
     </BaseModal>
