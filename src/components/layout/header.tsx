@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -18,12 +19,14 @@ const HeaderContainer = styled.header`
 const HeaderTitle = styled.h1`
   color: ${(props) => props.theme.gray200};
   margin: 0;
+  cursor: pointer;
 `;
 
 const Header: NextProps<HeaderProps> = ({}) => {
+  const router = useRouter();
   return (
     <HeaderContainer>
-      <HeaderTitle>god-guide</HeaderTitle>
+      <HeaderTitle onClick={() => router.push('/top')}>Nexpot</HeaderTitle>
     </HeaderContainer>
   );
 };

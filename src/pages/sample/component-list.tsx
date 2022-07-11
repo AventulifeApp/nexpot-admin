@@ -106,6 +106,12 @@ const Home: NextPage = () => {
           </Div>
         </form>
         <Table
+          tableHeadData={[
+            { title: '契約会社名', align: 'left', width: '100px' },
+            { title: '電話番号', align: 'left', width: '200px' },
+            { title: '' },
+            { title: '削除', align: 'center' },
+          ]}
           talbeData={[
             [
               { align: 'center', content: <>aaaa</> },
@@ -126,12 +132,6 @@ const Home: NextPage = () => {
               { align: 'center', content: <input type={'checkbox'} /> },
             ],
           ]}
-          headTableData={[
-            { title: '契約会社名', align: 'left', width: '100px' },
-            { title: '電話番号', align: 'left', width: '200px' },
-            { title: '' },
-            { title: '削除', align: 'center' },
-          ]}
         />
         <ConfirmModal
           showModal={showModal}
@@ -141,10 +141,16 @@ const Home: NextPage = () => {
           あいうえお あいうえお あいうえおあいうえお あいうえお あいうえお
           あいうえお あいうえお あいうえお あいうえお あいうえお あいうえお
           あいうえお あいうえお`}
-          closeButtonText={'閉じる'}
-          confirmButtonText={'削除'}
-          onConfirm={() => alert('削除しました')}
-          onCancel={() => setShowModal(false)}
+          leftButton={{
+            text: '閉じる',
+            onClick: () => setShowModal(false),
+            color: 'clear',
+          }}
+          rightButton={{
+            text: '削除',
+            onClick: () => alert('削除しました'),
+            color: 'red',
+          }}
         />
       </FormProvider>
     </>

@@ -29,9 +29,11 @@ const Btn = styled.button<{
     props.color === 'clear' ? `1px solid ${props.theme.gray300}` : 'none'};
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  :hover {
+  :hover,
+  :focus {
     background-color: ${(props) => BUTTON_COLORS[props.color].hover};
   }
+
   color: ${(props) => props.theme.gray700};
 `;
 
