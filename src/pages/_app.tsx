@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Layout } from '~/components';
 import { theme } from '~/constants/constants';
+import { AuthProvider } from '~/lib/auth';
 
 const GlobalStyles = createGlobalStyle`
 html,
@@ -18,12 +19,14 @@ body {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
