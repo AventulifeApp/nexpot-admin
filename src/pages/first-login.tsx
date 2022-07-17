@@ -40,7 +40,7 @@ const CompanyCreate: NextPage = () => {
           <form
             onSubmit={methods.handleSubmit(async ({ email, password }) => {
               await createUserWithEmailAndPassword(auth, email, password);
-              router.push('/top');
+              router.push('/');
             })}
             noValidate
           >

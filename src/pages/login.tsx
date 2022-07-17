@@ -1,6 +1,5 @@
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import type { NextPage } from 'next';
-import loadCustomRoutes from 'next/dist/lib/load-custom-routes';
 import { useRouter } from 'next/router';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -45,7 +44,7 @@ const CompanyCreate: NextPage = () => {
               } catch (error) {
                 console.error(error);
               }
-              router.push('/top');
+              router.push('/');
             })}
             noValidate
           >

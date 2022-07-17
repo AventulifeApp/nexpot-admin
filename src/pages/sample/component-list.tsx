@@ -49,12 +49,7 @@ const Home: NextPage = () => {
         </ButtonContainer>
       </Div>
       <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit((value) => {
-            console.log({ value });
-          })}
-          noValidate
-        >
+        <form onSubmit={methods.handleSubmit(() => {})} noValidate>
           <Div>
             <div>form</div>
             <RhfTextInput<FormValue>

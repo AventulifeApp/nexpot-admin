@@ -13,6 +13,7 @@ import InputLabel from './text/input-label';
 import Button from './button';
 import BaseModal from './modal/base-modal';
 import ConfirmModal from './modal/confirm-modal';
+import Pagination from './pagination';
 import Table, { TableType } from './table';
 
 export {
@@ -31,6 +32,7 @@ export {
   Button,
   BaseModal,
   ConfirmModal,
+  Pagination,
   Table,
 };
 
