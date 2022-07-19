@@ -38,7 +38,7 @@ const CompanyCreate: NextPage = () => {
 
   return (
     <>
-      <PageTitle>契約社作成画面</PageTitle>
+      <PageTitle>契約会社編集画面</PageTitle>
       <Div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit} noValidate>
@@ -48,7 +48,7 @@ const CompanyCreate: NextPage = () => {
               inputProps={{
                 rules: {
                   maxLength: {
-                    message: '100文字以上は入力出来ません	',
+                    message: '101文字以上は入力出来ません',
                     value: 100,
                   },
                   required: '契約会社名が入力されていません',
@@ -80,8 +80,8 @@ const CompanyCreate: NextPage = () => {
             </ButtonContainer>
             <ConfirmModal
               showModal={showModal}
-              title={'契約会社情報登録'}
-              content={'会社情報を登録します。'}
+              title={'契約会社情報更新'}
+              content={'会社情報を更新します。'}
               leftButton={{
                 text: '閉じる',
                 onClick: handleModalClose,

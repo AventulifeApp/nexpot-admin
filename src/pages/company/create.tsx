@@ -36,7 +36,7 @@ const CompanyCreate: NextPage = () => {
   } = useCompanyCreateUseCase();
   return (
     <>
-      <PageTitle>契約社作成画面</PageTitle>
+      <PageTitle>契約会社登録画面</PageTitle>
       <Div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit} noValidate>
@@ -46,7 +46,7 @@ const CompanyCreate: NextPage = () => {
               inputProps={{
                 rules: {
                   maxLength: {
-                    message: '100文字以上は入力出来ません	',
+                    message: '101文字以上は入力出来ません	',
                     value: 100,
                   },
                   required: '契約会社名が入力されていません',
