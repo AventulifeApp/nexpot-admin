@@ -3,6 +3,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { NextProps } from '~/types/common';
+// NOTE: issue3で追加予定
+// import { Button } from '~/components';
+// import { signOut } from 'firebase/auth';
+// import { useRouter } from 'next/router';
+// import { auth } from '~/lib/firebase';
 
 type HeaderProps = {};
 
@@ -26,7 +31,17 @@ const Header: NextProps<HeaderProps> = ({}) => {
   const router = useRouter();
   return (
     <HeaderContainer>
-      <HeaderTitle onClick={() => router.push('/top')}>Nexpot</HeaderTitle>
+      <HeaderTitle onClick={() => router.push('/')}>Nexpot</HeaderTitle>
+      {/*
+      NOTE: issue3で追加予定
+      <Button
+        color='red'
+        onClick={async () => {
+          await signOut(auth);
+        }}
+      >
+        ログアウト
+      </Button> */}
     </HeaderContainer>
   );
 };

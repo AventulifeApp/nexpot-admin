@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { NextProps } from '~/types/common';
 
 type Align = 'left' | 'center' | 'right';
-
+type TableHeadeData = { title: string; align?: Align; width?: string };
+type TalbeData = { align?: Align; content: ReactNode | string };
 export type TableType = {
-  tableHeadData: { title: string; align?: Align; width?: string }[];
-  talbeData: { align?: Align; content: ReactNode | string }[][];
+  tableHeadData: TableHeadeData[];
+  talbeData: TalbeData[][];
 };
 
 const Table = styled.table<{ width?: string }>`
@@ -40,7 +41,7 @@ const BaseTable: NextProps<TableType> = ({
   return (
     <Table>
       <THead>
-        <Tr>
+        <Tr data-testid='head-tr'>
           {tableHeadData.map(({ title, ...attr }) => (
             <Th key={title} {...attr}>
               {title}
@@ -50,7 +51,7 @@ const BaseTable: NextProps<TableType> = ({
       </THead>
       <TBody>
         {talbeData.map((row, i) => (
-          <Tr key={i} isOdd={i % 2 === 0}>
+          <Tr key={i} isOdd={i % 2 === 0} data-testid='body-tr'>
             {row.map(({ content, ...attr }, j) => {
               return (
                 <Td key={j} {...attr}>
