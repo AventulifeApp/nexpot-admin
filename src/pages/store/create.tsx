@@ -40,7 +40,7 @@ const CompanyCreate: NextPage = () => {
     methods,
     showModal,
     errorMessage,
-    companyName,
+    company,
     handleModalClose,
     handleModalCreate,
   } = useStoreCreateUseCase();
@@ -64,7 +64,7 @@ const CompanyCreate: NextPage = () => {
                     },
                     required: '契約会社名が入力されていません',
                   },
-                  defaultValue: companyName,
+                  defaultValue: company?.name,
                 }}
                 width='100%'
               />

@@ -6,13 +6,14 @@ import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
 import { GEOCODE_ENDPOINT } from '~/constants/constants';
 import { StoreFormValue } from '~/types/common';
+import { Company } from '~/model/entity';
 var geohash = require('ngeohash');
 
 export const useStoreCreateUseCase = () => {
   const methods = useForm<StoreFormValue>();
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [companyName, setCompanyName] = useState('');
+  const [company, setCompany] = useState<Company | null>(null);
   const [responseLocation, setResponseLocation] = useState<any>(null);
   const storeRepo = useStoreRepo();
   const companyRepo = useCompanyRepo();
@@ -27,7 +28,7 @@ export const useStoreCreateUseCase = () => {
         if (!company.name) {
           router.push('/company/select');
         }
-        setCompanyName(company.name);
+        setCompany(company);
       })();
     }
   }, [companyId, companyRepo, router]);
@@ -78,7 +79,8 @@ export const useStoreCreateUseCase = () => {
         !companyId ||
         !responseLocation ||
         !latitude ||
-        !longitude
+        !longitude ||
+        !company?.name
       ) {
         throw Error('エラーが発生しました');
       }
@@ -87,6 +89,7 @@ export const useStoreCreateUseCase = () => {
         ...values,
         uid,
         companyId: companyId as string,
+        companyName: company.name as string,
         geohash: geohash.encode(latitude, longitude),
         address,
         longitude,
@@ -98,13 +101,13 @@ export const useStoreCreateUseCase = () => {
       console.error(error);
       alert('登録に失敗しました');
     }
-  }, [companyId, methods, responseLocation, router, storeRepo]);
+  }, [company?.name, companyId, methods, responseLocation, router, storeRepo]);
 
   return {
     methods,
     showModal,
     errorMessage,
-    companyName,
+    company,
     handleSubmit,
     handleModalClose,
     handleModalCreate,
