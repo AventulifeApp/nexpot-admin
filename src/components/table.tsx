@@ -42,8 +42,8 @@ const BaseTable: NextProps<TableType> = ({
     <Table>
       <THead>
         <Tr data-testid='head-tr'>
-          {tableHeadData.map(({ title, ...attr }) => (
-            <Th key={title} {...attr}>
+          {tableHeadData.map(({ title, ...attr }, i) => (
+            <Th key={i} {...attr}>
               {title}
             </Th>
           ))}
