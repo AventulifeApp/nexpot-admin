@@ -22,3 +22,6 @@ export const BUTTON_COLORS = {
   blue: { color: '#7fdff2', hover: '#52c4db' },
   green: { color: '#bfffb3', hover: '#87e875' },
 } as const;
+
+export const GEOCODE_ENDPOINT =
+  'https://maps.googleapis.com/maps/api/geocode/json';
