@@ -20,10 +20,14 @@ import { PagingType } from '~/types/common';
 const ref = collection(db, 'stores');
 export const useStoreRepo = () => {
   const fetch = useCallback(async (storeId: string) => {
-    const res = await getDoc(doc(db, 'companies', storeId));
+    const res = await getDoc(doc(db, 'stores', storeId));
+    const data = res.data();
+    if (!data) {
+      return null;
+    }
     return {
       id: res.id,
-      ...res.data(),
+      ...data,
     } as Store;
   }, []);
 
@@ -85,6 +89,8 @@ export const useStoreRepo = () => {
       updatedAt: now,
       deletedAt: null,
     });
+
+    // TODO: rentalCyclePlacesを更新
   }, []);
 
   const select = useCallback(() => {}, []);

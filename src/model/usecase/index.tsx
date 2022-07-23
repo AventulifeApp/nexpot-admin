@@ -4,6 +4,7 @@ import { useCompanyEditUseCase } from './company/edit';
 import { useCompanySelectUseCase } from './company/select';
 import { useStoreListUseCase } from './store/list';
 import { useStoreCreateUseCase } from './store/create';
+import { useStoreEditUseCase } from './store/edit';
 
 export {
   useCompanyListUseCase,
@@ -12,4 +13,5 @@ export {
   useCompanySelectUseCase,
   useStoreListUseCase,
   useStoreCreateUseCase,
+  useStoreEditUseCase,
 };
