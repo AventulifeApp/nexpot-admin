@@ -10,10 +10,11 @@ import {
   addDoc,
   startAt,
   limit,
+  where,
 } from '@firebase/firestore';
 import { db } from '~/lib/firebase';
 import { Store } from '~/model/entity';
-import { FormValue } from '~/pages/company/create';
+import { FormValue } from '~/pages/store/create';
 import { endAt, limitToLast, updateDoc } from 'firebase/firestore';
 import { PagingType } from '~/types/common';
 
@@ -28,11 +29,12 @@ export const useStoreRepo = () => {
   }, []);
 
   const fetchAll = useCallback(
-    async (param: PagingType & { startDate?: Date }) => {
+    async (param: PagingType & { startDate?: Date; companyId: string }) => {
       let q = null;
       if (param.startDate) {
         q = query(
           ref,
+          where('companyId', '==', param.companyId),
           orderBy('createdAt', param.orderBy),
           param.isNext ? startAt(param.startDate) : endAt(param.startDate),
           param.isNext ? limit(param.limit + 1) : limitToLast(param.limit + 1)
@@ -40,6 +42,7 @@ export const useStoreRepo = () => {
       } else {
         q = query(
           ref,
+          where('companyId', '==', param.companyId),
           orderBy('createdAt', param.orderBy),
           limit(param.limit + 1)
         );
@@ -56,15 +59,20 @@ export const useStoreRepo = () => {
     []
   );
 
-  const create = useCallback(async (values: FormValue & { uid?: string }) => {
-    const now = new Date();
-    return await addDoc(ref, {
-      ...values,
-      createdAt: now,
-      updatedAt: now,
-      deletedAt: null,
-    });
-  }, []);
+  const create = useCallback(
+    async (
+      values: Omit<Store, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>
+    ) => {
+      const now = new Date();
+      return await addDoc(ref, {
+        ...values,
+        createdAt: now,
+        updatedAt: now,
+        deletedAt: null,
+      });
+    },
+    []
+  );
 
   const remove = useCallback(async (storeId: string) => {
     const userDocumentRef = doc(db, 'stores', storeId);

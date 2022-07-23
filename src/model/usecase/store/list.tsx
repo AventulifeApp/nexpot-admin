@@ -24,21 +24,24 @@ export const useStoreListUseCase = () => {
     orderBy: 'desc',
     isNext: true,
   });
-
   const storeRepo = useStoreRepo();
+  const companyId = router.query.companyId;
 
   useEffect(() => {
     const startAt = pageInfo.isNext ? storeList.length - 1 : 0;
-    storeRepo
-      .fetchAll({
-        ...pageInfo,
-        startDate: storeList?.[startAt]?.createdAt,
-      })
-      .then((storeList) => {
-        setStoreList(storeList);
-      });
+    if (companyId) {
+      storeRepo
+        .fetchAll({
+          ...pageInfo,
+          startDate: storeList?.[startAt]?.createdAt,
+          companyId: companyId as string,
+        })
+        .then((storeList) => {
+          setStoreList(storeList);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageInfo]);
+  }, [pageInfo, companyId]);
 
   const tableData = useMemo<TableType['talbeData']>(() => {
     let workstoreList = storeList;
@@ -49,7 +52,7 @@ export const useStoreListUseCase = () => {
       return [
         { align: 'center', content: store.name },
         { align: 'center', content: store.phone },
-        { align: 'center', content: store.address },
+        { align: 'left', content: store.address },
         {
           align: 'right',
           content: (
@@ -97,8 +100,8 @@ export const useStoreListUseCase = () => {
   }, [storeList, storeRepo, deleteStoreId]);
 
   const handleClickButton = useCallback(() => {
-    router.push('/store/create');
-  }, [router]);
+    router.push(`/store/create?companyId=${companyId}`);
+  }, [companyId, router]);
 
   const handleChangePage = useCallback((startAt: number, isNext: boolean) => {
     setPageInfo((value) => ({ ...value, startAt, isNext }));
