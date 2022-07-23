@@ -80,6 +80,7 @@ export const useCompanyRepo = () => {
         updatedAt: now,
         deletedAt: null,
       });
+      // TODO: storeを更新
     },
     []
   );
