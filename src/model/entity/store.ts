@@ -13,7 +13,7 @@ export type Store = {
   municipality: string;
   block: string;
   buildingName: string;
-  geohash: GeoPoint;
+  geohash: string;
   longitude: number;
   latitude: number;
   createdAt: Date;
