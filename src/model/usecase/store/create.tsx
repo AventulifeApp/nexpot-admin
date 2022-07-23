@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
-import { FormValue } from '~/pages/store/create';
 import { GEOCODE_ENDPOINT } from '~/constants/constants';
+import { StoreFormValue } from '~/types/common';
 var geohash = require('ngeohash');
 
 export const useStoreCreateUseCase = () => {
-  const methods = useForm<FormValue>();
+  const methods = useForm<StoreFormValue>();
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [companyName, setCompanyName] = useState('');

@@ -12,3 +12,13 @@ export type PagingType = {
   orderBy: 'asc' | 'desc';
   isNext: boolean;
 };
+export type StoreFormValue = {
+  companyName: string;
+  name: string;
+  phone: string;
+  postCode: string;
+  prefecture: string;
+  municipality: string;
+  block: string;
+  buildingName: string;
+};

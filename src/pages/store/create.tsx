@@ -3,6 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button, ConfirmModal, ErrorText, RhfTextInput } from '~/components';
 import { useStoreCreateUseCase } from '~/model/usecase';
+import { StoreFormValue } from '~/types/common';
 
 const Div = styled.div`
   margin: 40px auto;
@@ -33,17 +34,6 @@ const AddressTitle = styled.h3`
   margin-top: 24px;
 `;
 
-export type FormValue = {
-  companyName: string;
-  name: string;
-  phone: string;
-  postCode: string;
-  prefecture: string;
-  municipality: string;
-  block: string;
-  buildingName: string;
-};
-
 const CompanyCreate: NextPage = () => {
   const {
     handleSubmit,
@@ -62,7 +52,7 @@ const CompanyCreate: NextPage = () => {
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit} noValidate>
             <RowContainer>
-              <RhfTextInput<FormValue>
+              <RhfTextInput<StoreFormValue>
                 name='companyName'
                 labelProps={{ children: '契約会社名' }}
                 inputProps={{
@@ -78,7 +68,7 @@ const CompanyCreate: NextPage = () => {
                 }}
                 width='100%'
               />
-              <RhfTextInput<FormValue>
+              <RhfTextInput<StoreFormValue>
                 name='name'
                 labelProps={{ children: '店舗名' }}
                 inputProps={{
@@ -93,7 +83,7 @@ const CompanyCreate: NextPage = () => {
                 width='100%'
               />
             </RowContainer>
-            <RhfTextInput<FormValue>
+            <RhfTextInput<StoreFormValue>
               name='phone'
               labelProps={{ children: '電話番号' }}
               inputProps={{
@@ -110,7 +100,7 @@ const CompanyCreate: NextPage = () => {
             />
             <AddressTitle>住所</AddressTitle>
             <RowContainer>
-              <RhfTextInput<FormValue>
+              <RhfTextInput<StoreFormValue>
                 name='postCode'
                 labelProps={{ children: '郵便番号' }}
                 inputProps={{
@@ -124,7 +114,7 @@ const CompanyCreate: NextPage = () => {
                 }}
                 width='100%'
               />
-              <RhfTextInput<FormValue>
+              <RhfTextInput<StoreFormValue>
                 name='prefecture'
                 labelProps={{ children: '都道府県' }}
                 inputProps={{
@@ -139,7 +129,7 @@ const CompanyCreate: NextPage = () => {
                 width='100%'
               />
             </RowContainer>
-            <RhfTextInput<FormValue>
+            <RhfTextInput<StoreFormValue>
               name='municipality'
               labelProps={{ children: '市区町村' }}
               inputProps={{
@@ -154,7 +144,7 @@ const CompanyCreate: NextPage = () => {
               width='50%'
               margin='24px 0 0 0'
             />
-            <RhfTextInput<FormValue>
+            <RhfTextInput<StoreFormValue>
               name='block'
               labelProps={{ children: '番地' }}
               inputProps={{
@@ -169,7 +159,7 @@ const CompanyCreate: NextPage = () => {
               width='50%'
               margin='24px 0 0 0'
             />
-            <RhfTextInput<FormValue>
+            <RhfTextInput<StoreFormValue>
               name='buildingName'
               labelProps={{ children: '建物名・部屋番号' }}
               inputProps={{

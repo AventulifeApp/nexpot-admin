@@ -14,7 +14,6 @@ import {
 } from '@firebase/firestore';
 import { db } from '~/lib/firebase';
 import { Store } from '~/model/entity';
-import { FormValue } from '~/pages/store/create';
 import { endAt, limitToLast, updateDoc } from 'firebase/firestore';
 import { PagingType } from '~/types/common';
 
@@ -79,17 +78,14 @@ export const useStoreRepo = () => {
     return deleteDoc(userDocumentRef);
   }, []);
 
-  const update = useCallback(
-    async (values: FormValue & { uid?: string; storeId: string }) => {
-      const now = new Date();
-      return await updateDoc(doc(db, 'stores', values.storeId), {
-        ...values,
-        updatedAt: now,
-        deletedAt: null,
-      });
-    },
-    []
-  );
+  const update = useCallback(async (values: Store) => {
+    const now = new Date();
+    return await updateDoc(doc(db, 'stores', values.id), {
+      ...values,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }, []);
 
   const select = useCallback(() => {}, []);
 
