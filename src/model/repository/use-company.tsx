@@ -15,13 +15,7 @@ import { db } from '~/lib/firebase';
 import { Company } from '~/model/entity';
 import { FormValue } from '~/pages/company/create';
 import { endAt, limitToLast, updateDoc } from 'firebase/firestore';
-
-export type PagingType = {
-  startAt: number;
-  limit: number;
-  orderBy: 'asc' | 'desc';
-  isNext: boolean;
-};
+import { PagingType } from '~/types/common';
 
 const ref = collection(db, 'companies');
 export const useCompanyRepo = () => {

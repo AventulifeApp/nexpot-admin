@@ -6,7 +6,7 @@ import { TableType } from '~/components';
 import { useCompanyRepo } from '~/model/repository';
 import { Company } from '~/model/entity';
 import { useRouter } from 'next/router';
-import { PagingType } from '~/model/repository/use-company';
+import { PagingType } from '~/types/common';
 
 const IconWrapper = styled.div`
   cursor: pointer;
