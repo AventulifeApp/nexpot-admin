@@ -1,21 +1,12 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { AiFillDelete } from 'react-icons/ai';
-import styled from 'styled-components';
 import { TableType } from '~/components';
 import { useCompanyRepo } from '~/model/repository';
 import { Company } from '~/model/entity';
 import { useRouter } from 'next/router';
 import { PagingType } from '~/model/repository/use-company';
 
-const IconWrapper = styled.div`
-  cursor: pointer;
-`;
-
-export const useCompanyListUseCase = () => {
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
-  const [deleteCompanyId, setDeleteCompanyId] = useState<string | null>(null);
+export const useCompanySelectUseCase = () => {
   const [companyList, setCompanyList] = useState<Company[]>([]);
   const [pageInfo, setPageInfo] = useState<PagingType>({
     startAt: 1,
@@ -47,24 +38,13 @@ export const useCompanyListUseCase = () => {
     const list = workCompanyList.map((company) => {
       return [
         { align: 'center', content: company.name },
-        { align: 'center', content: company.phone },
-        {
-          align: 'right',
-          content: (
-            <Link href={`/company/edit?companyId=${company.id}`}>編集画面</Link>
-          ),
-        },
+        { align: 'center' },
         {
           align: 'center',
           content: (
-            <IconWrapper>
-              <AiFillDelete
-                onClick={() => {
-                  setDeleteCompanyId(company.id);
-                  setShowModal(true);
-                }}
-              />
-            </IconWrapper>
+            <Link href={`/store/list?companyId=${company.id}`}>
+              店舗一覧画面
+            </Link>
           ),
         },
       ];
@@ -73,40 +53,14 @@ export const useCompanyListUseCase = () => {
     return list as TableType['talbeData'];
   }, [companyList, pageInfo.limit]);
 
-  const handleCloseRemove = useCallback(async () => {
-    setShowModal(false);
-  }, []);
-
-  const handleModalRemove = useCallback(async () => {
-    try {
-      if (deleteCompanyId) {
-        await companyRepo.remove(deleteCompanyId);
-        setShowModal(false);
-        setCompanyList(companyList.filter(({ id }) => id !== deleteCompanyId));
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      alert('削除IDが設定されていません');
-    }
-  }, [companyList, companyRepo, deleteCompanyId]);
-
-  const handleClickButton = useCallback(() => {
-    router.push('/company/create');
-  }, [router]);
-
   const handleChangePage = useCallback((startAt: number, isNext: boolean) => {
     setPageInfo((value) => ({ ...value, startAt, isNext }));
   }, []);
 
   return {
     tableData,
-    showModal,
     length: companyList.length,
     pageInfo,
-    handleClickButton,
-    handleCloseRemove,
-    handleModalRemove,
     handleChangePage,
   };
 };
