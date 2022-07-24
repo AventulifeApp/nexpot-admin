@@ -35,18 +35,21 @@ export const useCompanySelectUseCase = () => {
       workCompanyList = workCompanyList.slice(0, -1);
     }
     const list = workCompanyList.map((company) => {
-      return [
-        { align: 'center', content: company.name },
-        { align: 'center' },
-        {
-          align: 'center',
-          content: (
-            <Link href={`/store/list?companyId=${company.id}`}>
-              店舗一覧画面
-            </Link>
-          ),
-        },
-      ];
+      return {
+        key: company.id,
+        data: [
+          { align: 'center', content: company.name },
+          { align: 'center' },
+          {
+            align: 'center',
+            content: (
+              <Link href={`/store/list?companyId=${company.id}`}>
+                店舗一覧画面
+              </Link>
+            ),
+          },
+        ],
+      };
     });
 
     return list as TableType['talbeData'];

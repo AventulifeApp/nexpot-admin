@@ -49,33 +49,36 @@ export const useStoreListUseCase = () => {
       workstoreList = workstoreList.slice(0, -1);
     }
     const list = workstoreList.map((store) => {
-      return [
-        { align: 'center', content: store.name },
-        { align: 'center', content: store.phone },
-        { align: 'left', content: store.address },
-        {
-          align: 'right',
-          content: (
-            <Link href={`/store/edit?storeId=${store.id}`}>編集画面</Link>
-          ),
-        },
-        {
-          align: 'center',
-          content: (
-            <IconWrapper>
-              <AiFillDelete
-                onClick={() => {
-                  setDeleteStoreId(store.id);
-                  setShowModal(true);
-                  setDeleteModalMessage(
-                    `会社名: ${store.companyName}、店舗名: ${store.name} の店舗情報（紐づくレンタサイクル置場情報）を削除します。`
-                  );
-                }}
-              />
-            </IconWrapper>
-          ),
-        },
-      ];
+      return {
+        key: store.id,
+        data: [
+          { align: 'center', content: store.name },
+          { align: 'center', content: store.phone },
+          { align: 'left', content: store.address },
+          {
+            align: 'right',
+            content: (
+              <Link href={`/store/edit?storeId=${store.id}`}>編集画面</Link>
+            ),
+          },
+          {
+            align: 'center',
+            content: (
+              <IconWrapper>
+                <AiFillDelete
+                  onClick={() => {
+                    setDeleteStoreId(store.id);
+                    setShowModal(true);
+                    setDeleteModalMessage(
+                      `会社名: ${store.companyName}、店舗名: ${store.name} の店舗情報（紐づくレンタサイクル置場情報）を削除します。`
+                    );
+                  }}
+                />
+              </IconWrapper>
+            ),
+          },
+        ],
+      };
     });
 
     return list as TableType['talbeData'];
