@@ -12,3 +12,8 @@ export type PagingType = {
   orderBy: 'asc' | 'desc';
   isNext: boolean;
 };
+
+export type CompanyFormValue = {
+  name: string;
+  phone: string;
+};

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TableType } from '~/components';
-import { useCompanyRepo } from '~/model/repository';
 import { Company } from '~/model/entity';
+import { useFetchAllCompany } from '~/model/repository/firestore/company/fetchAll';
 import { PagingType } from '~/types/common';
 
 export const useCompanySelectUseCase = () => {
@@ -14,18 +14,16 @@ export const useCompanySelectUseCase = () => {
     isNext: true,
   });
 
-  const companyRepo = useCompanyRepo();
+  const fetchAllCompany = useFetchAllCompany();
 
   useEffect(() => {
     const startAt = pageInfo.isNext ? companyList.length - 1 : 0;
-    companyRepo
-      .fetchAll({
-        ...pageInfo,
-        startDate: companyList?.[startAt]?.createdAt,
-      })
-      .then((companyList) => {
-        setCompanyList(companyList);
-      });
+    fetchAllCompany({
+      ...pageInfo,
+      startDate: companyList?.[startAt]?.createdAt,
+    }).then((companyList) => {
+      setCompanyList(companyList);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo]);
 
