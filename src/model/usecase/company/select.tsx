@@ -13,7 +13,6 @@ export const useCompanySelectUseCase = () => {
     orderBy: 'desc',
     isNext: true,
   });
-
   const fetchAllCompany = useFetchAllCompany();
 
   useEffect(() => {
@@ -22,6 +21,10 @@ export const useCompanySelectUseCase = () => {
       ...pageInfo,
       startDate: companyList?.[startAt]?.createdAt,
     }).then((companyList) => {
+      if (!companyList) {
+        alert('データの取得ができませんでした');
+        return;
+      }
       setCompanyList(companyList);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,14 +35,17 @@ export const useCompanySelectUseCase = () => {
     if (pageInfo.limit < workCompanyList.length) {
       workCompanyList = workCompanyList.slice(0, -1);
     }
-    const list = workCompanyList.map((company) => {
+    const list = workCompanyList.map((company, i) => {
       return [
         { align: 'center', content: company.name },
         { align: 'center' },
         {
           align: 'center',
           content: (
-            <Link href={`/store/list?companyId=${company.id}`}>
+            <Link
+              href={`/store/list?companyId=${company.id}`}
+              data-testid={`${company.id}${i}`}
+            >
               店舗一覧画面
             </Link>
           ),
