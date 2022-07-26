@@ -33,6 +33,10 @@ export const useCompanyListUseCase = () => {
       ...pageInfo,
       startDate: companyList?.[startAt]?.createdAt,
     }).then((companyList) => {
+      if (!companyList) {
+        alert('データの取得ができませんでした');
+        return;
+      }
       setCompanyList(companyList);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
