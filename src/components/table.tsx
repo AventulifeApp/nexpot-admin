@@ -54,7 +54,7 @@ const BaseTable: NextProps<TableType> = ({
           <Tr key={i} isOdd={i % 2 === 0} data-testid='body-tr'>
             {row.map(({ content, ...attr }, j) => {
               return (
-                <Td key={j} {...attr}>
+                <Td key={j} {...attr} data-testid={`body-td${i}${j}`}>
                   {content}
                 </Td>
               );
