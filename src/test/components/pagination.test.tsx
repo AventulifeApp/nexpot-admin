@@ -1,7 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Pagination } from '~/components';
-import { PagingType } from '~/model/repository/use-company';
 
 describe('src/components/pagination.tsx', () => {
   it('2ページ目の場合、prev page eventが発火すること', () => {
