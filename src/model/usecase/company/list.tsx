@@ -3,10 +3,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import styled from 'styled-components';
 import { TableType } from '~/components';
-import { useCompanyRepo } from '~/model/repository';
 import { Company } from '~/model/entity';
 import { useRouter } from 'next/router';
 import { PagingType } from '~/types/common';
+import { useFetchAllCompany } from '~/model/repository/firestore/company/fetchAll';
+import { useRemoveCompany } from '~/model/repository/firestore/company/remove';
 
 const IconWrapper = styled.div`
   cursor: pointer;
@@ -23,19 +24,21 @@ export const useCompanyListUseCase = () => {
     orderBy: 'desc',
     isNext: true,
   });
-
-  const companyRepo = useCompanyRepo();
+  const fetchAllCompany = useFetchAllCompany();
+  const removeCompany = useRemoveCompany();
 
   useEffect(() => {
     const startAt = pageInfo.isNext ? companyList.length - 1 : 0;
-    companyRepo
-      .fetchAll({
-        ...pageInfo,
-        startDate: companyList?.[startAt]?.createdAt,
-      })
-      .then((companyList) => {
-        setCompanyList(companyList);
-      });
+    fetchAllCompany({
+      ...pageInfo,
+      startDate: companyList?.[startAt]?.createdAt,
+    }).then((companyList) => {
+      if (!companyList) {
+        alert('データの取得ができませんでした');
+        return;
+      }
+      setCompanyList(companyList);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo]);
 
@@ -80,7 +83,7 @@ export const useCompanyListUseCase = () => {
   const handleModalRemove = useCallback(async () => {
     try {
       if (deleteCompanyId) {
-        await companyRepo.remove(deleteCompanyId);
+        await removeCompany(deleteCompanyId);
         setShowModal(false);
         setCompanyList(companyList.filter(({ id }) => id !== deleteCompanyId));
       } else {
@@ -89,7 +92,7 @@ export const useCompanyListUseCase = () => {
     } catch (error) {
       alert('削除IDが設定されていません');
     }
-  }, [companyList, companyRepo, deleteCompanyId]);
+  }, [companyList, deleteCompanyId, removeCompany]);
 
   const handleClickButton = useCallback(() => {
     router.push('/company/create');

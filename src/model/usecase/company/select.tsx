@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TableType } from '~/components';
-import { useCompanyRepo } from '~/model/repository';
 import { Company } from '~/model/entity';
+import { useFetchAllCompany } from '~/model/repository/firestore/company/fetchAll';
 import { PagingType } from '~/types/common';
 
 export const useCompanySelectUseCase = () => {
@@ -13,19 +13,20 @@ export const useCompanySelectUseCase = () => {
     orderBy: 'desc',
     isNext: true,
   });
-
-  const companyRepo = useCompanyRepo();
+  const fetchAllCompany = useFetchAllCompany();
 
   useEffect(() => {
     const startAt = pageInfo.isNext ? companyList.length - 1 : 0;
-    companyRepo
-      .fetchAll({
-        ...pageInfo,
-        startDate: companyList?.[startAt]?.createdAt,
-      })
-      .then((companyList) => {
-        setCompanyList(companyList);
-      });
+    fetchAllCompany({
+      ...pageInfo,
+      startDate: companyList?.[startAt]?.createdAt,
+    }).then((companyList) => {
+      if (!companyList) {
+        alert('データの取得ができませんでした');
+        return;
+      }
+      setCompanyList(companyList);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo]);
 
@@ -34,14 +35,17 @@ export const useCompanySelectUseCase = () => {
     if (pageInfo.limit < workCompanyList.length) {
       workCompanyList = workCompanyList.slice(0, -1);
     }
-    const list = workCompanyList.map((company) => {
+    const list = workCompanyList.map((company, i) => {
       return [
         { align: 'center', content: company.name },
         { align: 'center' },
         {
           align: 'center',
           content: (
-            <Link href={`/store/list?companyId=${company.id}`}>
+            <Link
+              href={`/store/list?companyId=${company.id}`}
+              data-testid={`${company.id}${i}`}
+            >
               店舗一覧画面
             </Link>
           ),

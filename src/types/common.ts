@@ -22,3 +22,8 @@ export type StoreFormValue = {
   block: string;
   buildingName: string;
 };
+
+export type CompanyFormValue = {
+  name: string;
+  phone: string;
+};

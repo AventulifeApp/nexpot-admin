@@ -4,8 +4,7 @@ import {
   BsFillArrowRightCircleFill,
 } from 'react-icons/bs';
 import styled from 'styled-components';
-import { PagingType } from '~/model/repository/use-company';
-import { NextProps } from '~/types/common';
+import { NextProps, PagingType } from '~/types/common';
 
 type PaginationProps = {
   length: number;

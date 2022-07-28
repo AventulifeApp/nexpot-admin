@@ -3,6 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button, ConfirmModal, RhfTextInput } from '~/components';
 import { useCompanyCreateUseCase } from '~/model/usecase';
+import { CompanyFormValue } from '~/types/common';
 
 const Div = styled.div`
   margin: 40px auto;
@@ -21,11 +22,6 @@ const ButtonContainer = styled.div`
   margin-top: 24px;
 `;
 
-export type FormValue = {
-  name: string;
-  phone: string;
-};
-
 const CompanyCreate: NextPage = () => {
   const {
     handleSubmit,
@@ -40,7 +36,7 @@ const CompanyCreate: NextPage = () => {
       <Div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit} noValidate>
-            <RhfTextInput<FormValue>
+            <RhfTextInput<CompanyFormValue>
               name='name'
               labelProps={{ children: '契約会社名' }}
               inputProps={{
@@ -54,7 +50,7 @@ const CompanyCreate: NextPage = () => {
               }}
               width='100%'
             />
-            <RhfTextInput<FormValue>
+            <RhfTextInput<CompanyFormValue>
               name='phone'
               labelProps={{ children: '電話番号' }}
               inputProps={{

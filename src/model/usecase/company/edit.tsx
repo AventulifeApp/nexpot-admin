@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useCompanyRepo } from '~/model/repository';
 import { useRouter } from 'next/router';
 import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
-import { FormValue } from '~/pages/company/create';
 import { Company } from '~/model/entity';
+import { CompanyFormValue } from '~/types/common';
+import { useUpdateCompany } from '~/model/repository/firestore/company/update';
+import { useFetchCompany } from '~/model/repository/firestore/company/fetch';
 
 export const useCompanyEditUseCase = () => {
   const router = useRouter();
-  const methods = useForm<FormValue>();
+  const methods = useForm<CompanyFormValue>();
   const [showModal, setShowModal] = useState(false);
   const [company, setCompany] = useState<Company | null>(null);
-  const companyRepo = useCompanyRepo();
+  const updateCompany = useUpdateCompany();
+  const fetchCompany = useFetchCompany();
 
   const {
     isReady,
@@ -20,7 +22,7 @@ export const useCompanyEditUseCase = () => {
 
   useEffect(() => {
     if (isReady && companyId) {
-      companyRepo.fetch(companyId as string).then((company) => {
+      fetchCompany(companyId as string).then((company) => {
         setCompany(company);
       });
     }
@@ -41,7 +43,7 @@ export const useCompanyEditUseCase = () => {
       if (companyId) {
         const values = methods.getValues();
         const uid = auth.currentUser?.uid;
-        await companyRepo.update({
+        await updateCompany({
           ...values,
           uid,
           companyId: companyId as string,
@@ -52,7 +54,7 @@ export const useCompanyEditUseCase = () => {
     } catch (error) {
       alert('更新に失敗しました');
     }
-  }, [companyId, companyRepo, methods, router]);
+  }, [companyId, methods, router, updateCompany]);
 
   return {
     methods,
