@@ -3,10 +3,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import styled from 'styled-components';
 import { TableType } from '~/components';
-import { useStoreRepo } from '~/model/repository';
 import { Store } from '~/model/entity';
 import { useRouter } from 'next/router';
 import { PagingType } from '~/types/common';
+import { useFetchAllStore } from '~/model/repository/firestore/store/fetchAll';
+import { useRemoveStore } from '~/model/repository/firestore/store/remove';
 
 const IconWrapper = styled.div`
   cursor: pointer;
@@ -24,21 +25,22 @@ export const useStoreListUseCase = () => {
     orderBy: 'desc',
     isNext: true,
   });
-  const storeRepo = useStoreRepo();
+  const fetchAllStore = useFetchAllStore();
+  const removeStore = useRemoveStore();
   const companyId = router.query.companyId;
 
   useEffect(() => {
     const startAt = pageInfo.isNext ? storeList.length - 1 : 0;
     if (companyId) {
-      storeRepo
-        .fetchAll({
-          ...pageInfo,
-          startDate: storeList?.[startAt]?.createdAt,
-          companyId: companyId as string,
-        })
-        .then((storeList) => {
+      fetchAllStore({
+        ...pageInfo,
+        startDate: storeList?.[startAt]?.createdAt,
+        companyId: companyId as string,
+      }).then((storeList) => {
+        if (storeList) {
           setStoreList(storeList);
-        });
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo, companyId]);
@@ -88,7 +90,7 @@ export const useStoreListUseCase = () => {
   const handleModalRemove = useCallback(async () => {
     try {
       if (deleteStoreId) {
-        await storeRepo.remove(deleteStoreId);
+        await removeStore(deleteStoreId);
         setShowModal(false);
         setStoreList(storeList.filter(({ id }) => id !== deleteStoreId));
       } else {
@@ -97,7 +99,7 @@ export const useStoreListUseCase = () => {
     } catch (error) {
       alert('削除IDが設定されていません');
     }
-  }, [storeList, storeRepo, deleteStoreId]);
+  }, [deleteStoreId, removeStore, storeList]);
 
   const handleClickButton = useCallback(() => {
     router.push(`/store/create?companyId=${companyId}`);

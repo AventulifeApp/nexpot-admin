@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useCompanyRepo, useStoreRepo } from '~/model/repository';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
 import { GEOCODE_ENDPOINT } from '~/constants/constants';
 import { StoreFormValue } from '~/types/common';
-import { Company, Store } from '~/model/entity';
+import { Store } from '~/model/entity';
+import { useFetchStore } from '~/model/repository/firestore/store/fetch';
+import { useUpdateStore } from '~/model/repository/firestore/store/update';
 var geohash = require('ngeohash');
 
 export const useStoreEditUseCase = () => {
@@ -15,20 +16,20 @@ export const useStoreEditUseCase = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [store, setStore] = useState<Store | null>(null);
   const [responseLocation, setResponseLocation] = useState<any>(null);
-  const storeRepo = useStoreRepo();
+  const fetchStore = useFetchStore();
+  const updateStore = useUpdateStore();
 
   const router = useRouter();
   const storeId = router.query.storeId;
 
   useEffect(() => {
     if (storeId) {
-      console.log({ storeId });
-
       (async () => {
-        const store = await storeRepo.fetch(storeId as string);
+        const store = await fetchStore(storeId as string);
 
         if (!store) {
           router.push('/company/select');
+          return;
         }
         setStore(store);
       })();
@@ -88,7 +89,7 @@ export const useStoreEditUseCase = () => {
         throw Error('エラーが発生しました');
       }
 
-      await storeRepo.update({
+      await updateStore({
         ...store,
         ...values,
         uid,
@@ -103,7 +104,7 @@ export const useStoreEditUseCase = () => {
       console.error(error);
       alert('登録に失敗しました');
     }
-  }, [methods, responseLocation, router, store, storeId, storeRepo]);
+  }, [methods, responseLocation, router, store, storeId, updateStore]);
 
   return {
     methods,
