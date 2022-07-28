@@ -12,6 +12,10 @@ export type PagingType = {
   orderBy: 'asc' | 'desc';
   isNext: boolean;
 };
+export type CRUDDomainType<T> = Omit<
+  T,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
 export type StoreFormValue = {
   companyName: string;
   name: string;
