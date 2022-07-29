@@ -8,7 +8,7 @@ import { StoreFormValue } from '~/types/common';
 import { Store } from '~/model/entity';
 import { useFetchStore } from '~/model/repository/firestore/store/fetch';
 import { useUpdateStore } from '~/model/repository/firestore/store/update';
-var geohash = require('ngeohash');
+import geohash from 'ngeohash';
 
 export const useStoreEditUseCase = () => {
   const methods = useForm<StoreFormValue>();
