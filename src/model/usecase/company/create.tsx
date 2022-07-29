@@ -23,7 +23,12 @@ export const useCompanyCreateUseCase = () => {
     try {
       const values = methods.getValues();
       const uid = auth.currentUser?.uid;
+      if (!uid) {
+        router.push('/company/list');
+        return;
+      }
       await createCompany({ ...values, uid });
+
       router.push('/company/list');
       setShowModal(false);
     } catch (error) {
