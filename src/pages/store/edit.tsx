@@ -192,7 +192,7 @@ const CompanyCreate: NextPage = () => {
             )}
             <ButtonContainer>
               <Button color='green' type='submit' width='50%'>
-                登録
+                更新
               </Button>
             </ButtonContainer>
             <ConfirmModal
