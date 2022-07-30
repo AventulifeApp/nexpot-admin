@@ -93,10 +93,14 @@ export const useStoreEditUseCase = () => {
         ...store,
         ...values,
         uid,
-        geohash: geohash.encode(latitude, longitude),
+        position: {
+          geohash: geohash.encode(latitude, longitude),
+          geopoint: {
+            longitude,
+            latitude,
+          },
+        },
         address,
-        longitude,
-        latitude,
       });
       router.push(`/store/list?companyId=${store.companyId}`);
       setShowModal(false);
