@@ -1,3 +1,4 @@
+import { GeoPoint } from 'firebase/firestore';
 import { NextPage } from 'next';
 import { memo } from 'react';
 import { BUTTON_COLORS } from '~/constants/constants';
@@ -26,8 +27,14 @@ export type StoreFormValue = {
   block: string;
   buildingName: string;
 };
-
 export type CompanyFormValue = {
   name: string;
   phone: string;
+};
+export type GeoPosition = {
+  geohash: string;
+  geopoint: {
+    latitude: number;
+    longitude: number;
+  };
 };
