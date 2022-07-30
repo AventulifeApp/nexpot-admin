@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useCompanyRepo, useStoreRepo } from '~/model/repository';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { auth } from '~/lib/firebase';
@@ -7,7 +6,9 @@ import { useForm } from 'react-hook-form';
 import { GEOCODE_ENDPOINT } from '~/constants/constants';
 import { StoreFormValue } from '~/types/common';
 import { Company } from '~/model/entity';
-var geohash = require('ngeohash');
+import { useFetchCompany } from '~/model/repository/firestore/company/fetch';
+import { useCreateStore } from '~/model/repository/firestore/store/create';
+import geohash from 'ngeohash';
 
 export const useStoreCreateUseCase = () => {
   const methods = useForm<StoreFormValue>();
@@ -15,23 +16,23 @@ export const useStoreCreateUseCase = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [company, setCompany] = useState<Company | null>(null);
   const [responseLocation, setResponseLocation] = useState<any>(null);
-  const storeRepo = useStoreRepo();
-  const companyRepo = useCompanyRepo();
+  const fetchCompany = useFetchCompany();
+  const createStore = useCreateStore();
   const router = useRouter();
   const companyId = router.query.companyId;
 
   useEffect(() => {
     if (companyId) {
       (async () => {
-        const company = await companyRepo.fetch(companyId as string);
-
-        if (!company.name) {
+        const company = await fetchCompany(companyId as string);
+        if (!company) {
           router.push('/company/select');
+          return;
         }
         setCompany(company);
       })();
     }
-  }, [companyId, companyRepo, router]);
+  }, [companyId, fetchCompany, router]);
 
   const handleSubmit = methods.handleSubmit(async (values) => {
     try {
@@ -85,15 +86,19 @@ export const useStoreCreateUseCase = () => {
         throw Error('エラーが発生しました');
       }
 
-      await storeRepo.create({
+      await createStore({
         ...values,
         uid,
         companyId: companyId as string,
         companyName: company.name as string,
-        geohash: geohash.encode(latitude, longitude),
+        position: {
+          geohash: geohash.encode(latitude, longitude),
+          geopoint: {
+            latitude,
+            longitude,
+          },
+        },
         address,
-        longitude,
-        latitude,
       });
       router.push(`/store/list?companyId=${companyId}`);
       setShowModal(false);
@@ -101,7 +106,14 @@ export const useStoreCreateUseCase = () => {
       console.error(error);
       alert('登録に失敗しました');
     }
-  }, [company?.name, companyId, methods, responseLocation, router, storeRepo]);
+  }, [
+    company?.name,
+    companyId,
+    createStore,
+    methods,
+    responseLocation,
+    router,
+  ]);
 
   return {
     methods,

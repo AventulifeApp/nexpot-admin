@@ -1,4 +1,4 @@
-import { GeoPoint } from 'firebase/firestore';
+import { GeoPosition } from '~/types/common';
 
 export type Store = {
   id: string;
@@ -13,9 +13,7 @@ export type Store = {
   municipality: string;
   block: string;
   buildingName: string;
-  geohash: string;
-  longitude: number;
-  latitude: number;
+  position: GeoPosition;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;

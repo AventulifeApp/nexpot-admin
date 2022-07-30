@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import Loading from 'react-loading';
 import styled from 'styled-components';
 import { Button, ConfirmModal, ErrorText, RhfTextInput } from '~/components';
-import { useStoreCreateUseCase, useStoreEditUseCase } from '~/model/usecase';
+import { useStoreEditUseCase } from '~/model/usecase';
 import { StoreFormValue } from '~/types/common';
 
 const Div = styled.div`
@@ -179,7 +179,6 @@ const CompanyCreate: NextPage = () => {
                     message: '建物名・部屋番号は255文字以下で入力してください',
                     value: 255,
                   },
-                  required: '建物名・部屋番号を入力してください',
                 },
                 defaultValue: store?.buildingName,
               }}
@@ -192,7 +191,7 @@ const CompanyCreate: NextPage = () => {
             )}
             <ButtonContainer>
               <Button color='green' type='submit' width='50%'>
-                登録
+                更新
               </Button>
             </ButtonContainer>
             <ConfirmModal

@@ -1,3 +1,4 @@
+import { GeoPoint } from 'firebase/firestore';
 import { NextPage } from 'next';
 import { memo } from 'react';
 import { BUTTON_COLORS } from '~/constants/constants';
@@ -12,6 +13,10 @@ export type PagingType = {
   orderBy: 'asc' | 'desc';
   isNext: boolean;
 };
+export type CRUDDomainType<T> = Omit<
+  T,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
 export type StoreFormValue = {
   companyName: string;
   name: string;
@@ -21,4 +26,15 @@ export type StoreFormValue = {
   municipality: string;
   block: string;
   buildingName: string;
+};
+export type CompanyFormValue = {
+  name: string;
+  phone: string;
+};
+export type GeoPosition = {
+  geohash: string;
+  geopoint: {
+    latitude: number;
+    longitude: number;
+  };
 };

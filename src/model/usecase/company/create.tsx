@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
-import { useCompanyRepo } from '~/model/repository';
 import { useRouter } from 'next/router';
 import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
-import { FormValue } from '~/pages/company/create';
+import { CompanyFormValue } from '~/types/common';
+import { useCreateCompany } from '~/model/repository/firestore/company/create';
 
 export const useCompanyCreateUseCase = () => {
-  const methods = useForm<FormValue>();
+  const methods = useForm<CompanyFormValue>();
   const [showModal, setShowModal] = useState(false);
-  const companyRepo = useCompanyRepo();
+  const createCompany = useCreateCompany();
   const router = useRouter();
 
   const handleSubmit = methods.handleSubmit(() => {
@@ -23,13 +23,18 @@ export const useCompanyCreateUseCase = () => {
     try {
       const values = methods.getValues();
       const uid = auth.currentUser?.uid;
-      await companyRepo.create({ ...values, uid });
+      if (!uid) {
+        router.push('/company/list');
+        return;
+      }
+      await createCompany({ ...values, uid });
+
       router.push('/company/list');
       setShowModal(false);
     } catch (error) {
       alert('登録に失敗しました');
     }
-  }, [companyRepo, methods, router]);
+  }, [createCompany, methods, router]);
 
   return {
     methods,

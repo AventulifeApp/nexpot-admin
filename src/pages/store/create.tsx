@@ -168,7 +168,6 @@ const CompanyCreate: NextPage = () => {
                     message: '建物名・部屋番号は255文字以下で入力してください',
                     value: 255,
                   },
-                  required: '建物名・部屋番号を入力してください',
                 },
               }}
               width='50%'

@@ -21,7 +21,7 @@ const tableHeadData: TableType['tableHeadData'] = [
   { title: '', width: '200px' },
 ];
 
-const CompanyList: NextPage = () => {
+const CompanySelect: NextPage = () => {
   const { tableData, length, pageInfo, handleChangePage } =
     useCompanySelectUseCase();
 
@@ -45,4 +45,4 @@ const CompanyList: NextPage = () => {
   );
 };
 
-export default CompanyList;
+export default CompanySelect;
