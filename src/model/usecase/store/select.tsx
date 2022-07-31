@@ -2,10 +2,11 @@ import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { TableType } from '~/components';
-import { useCompanyRepo, useStoreRepo } from '~/model/repository';
 import { Company, Store } from '~/model/entity';
 import { useRouter } from 'next/router';
 import { PagingType } from '~/types/common';
+import { useFetchAllCompany } from '~/model/repository/firestore/company/fetchAll';
+import { useFetchAllStore } from '~/model/repository/firestore/store/fetchAll';
 
 const CompanyButton = styled.button`
   color: #0000ff;
@@ -38,12 +39,13 @@ export const useStoreSelectUseCase = () => {
   const router = useRouter();
   const [storeList, setStoreList] = useState<Store[]>([]);
   const [companyList, setCompanyList] = useState<Company[]>([]);
+  const [companyId, setCompanyId] = useState<string>('');
   const [companyPageInfo, setCompanyPageInfo] =
     useState<PagingType>(defaultPageInfo);
   const [storePageInfo, setStorePageInfo] =
     useState<PagingType>(defaultPageInfo);
-  const companyRepo = useCompanyRepo();
-  const storeRepo = useStoreRepo();
+  const fetchAllCompany = useFetchAllCompany();
+  const fetchAllStore = useFetchAllStore();
   const menu = router.query.menu;
 
   useEffect(() => {
@@ -55,17 +57,35 @@ export const useStoreSelectUseCase = () => {
 
   useEffect(() => {
     const startAt = companyPageInfo.isNext ? companyList.length - 1 : 0;
-    companyRepo
-      .fetchAll({
-        ...companyPageInfo,
-        startDate: companyList?.[startAt]?.createdAt,
-      })
-      .then((companyList) => {
-        console.log({ companyList });
+    fetchAllCompany({
+      ...companyPageInfo,
+      startDate: companyList?.[startAt]?.createdAt,
+    }).then((companyList) => {
+      if (companyList) {
         setCompanyList(companyList);
-      });
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyPageInfo]);
+
+  useEffect(() => {
+    let startAt = storePageInfo.isNext ? storeList.length - 1 : 0;
+
+    if (companyId) {
+      fetchAllStore({
+        ...storePageInfo,
+        startDate: storeList?.[startAt]?.createdAt,
+        companyId: companyId,
+      }).then((storeList) => {
+        console.log({ storeList });
+
+        if (storeList) {
+          setStoreList(storeList);
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [companyId, storePageInfo]);
 
   const companyTableData = useMemo<TableType['talbeData']>(() => {
     let workCompanyList = companyList;
@@ -82,21 +102,9 @@ export const useStoreSelectUseCase = () => {
             content: (
               <CompanyButton
                 onClick={() => {
-                  const startAt = storePageInfo.isNext
-                    ? storeList.length - 1
-                    : 0;
-                  if (company.id) {
-                    storeRepo
-                      .fetchAll({
-                        ...storePageInfo,
-                        startDate: storeList?.[startAt]?.createdAt,
-                        companyId: company.id as string,
-                      })
-                      .then((storeList) => {
-                        console.log({ storeList });
-
-                        setStoreList(storeList);
-                      });
+                  if (companyId !== company.id) {
+                    setCompanyId(company.id);
+                    setStoreList([]);
                   }
                 }}
               >
@@ -109,7 +117,7 @@ export const useStoreSelectUseCase = () => {
     });
 
     return list as TableType['talbeData'];
-  }, [companyList, companyPageInfo.limit, storeList, storePageInfo, storeRepo]);
+  }, [companyId, companyList, companyPageInfo.limit]);
 
   const storeTableData = useMemo<TableType['talbeData']>(() => {
     let workStoreList = storeList;
