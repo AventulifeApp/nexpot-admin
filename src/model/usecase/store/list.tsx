@@ -52,6 +52,7 @@ export const useStoreListUseCase = () => {
     }
     const list = workstoreList.map((store) => {
       return [
+        { align: 'center', content: store.companyName },
         { align: 'center', content: store.name },
         { align: 'center', content: store.phone },
         { align: 'left', content: store.address },

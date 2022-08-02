@@ -22,7 +22,8 @@ const TableInfoContainer = styled.div`
 `;
 
 const tableHeadData: TableType['tableHeadData'] = [
-  { title: '店舗名', align: 'center', width: '20%' },
+  { title: '会社名', align: 'center', width: '10%' },
+  { title: '店舗名', align: 'center', width: '10%' },
   { title: '電話番号', align: 'center', width: '20%' },
   { title: '住所', align: 'center', width: '' },
   { title: '', width: '80px' },
