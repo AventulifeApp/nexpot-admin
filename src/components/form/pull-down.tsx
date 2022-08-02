@@ -28,15 +28,24 @@ type PullDownProps = {
     HTMLOptionElement
   >[];
 };
+const InputContainer = styled.div<{ margin?: string; width: string }>`
+  display: block;
+  ${(props) => props.margin && 'margin: ' + props.margin};
+  width: ${(props) => props.width};
+`;
 
-const Select = styled.select<{ width: string }>`
+const Select = styled.select`
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme.gray400};
   color: ${(props) => props.theme.gray900};
   font-size: 16px;
-  width: ${(props) => props.width};
+  width: 100%;
   padding: 8px;
   box-sizing: border-box;
+  ${(props) => props.disabled && `background-color: ${props.theme.gray300};`};
+  :disabled {
+    opacity: 1;
+  }
 `;
 
 const PullDown: NextProps<PullDownProps> = ({
@@ -49,10 +58,10 @@ const PullDown: NextProps<PullDownProps> = ({
   options,
 }) => {
   return (
-    <div>
+    <InputContainer width={width}>
       <InputLabel labelProps={{ ...labelProps, htmlFor: name }} />
       <br />
-      <Select {...selectProps} id={name} name={name} width={width}>
+      <Select {...selectProps} id={name} name={name}>
         <option key={'blank'} value={''}></option>
         {options.map((option) => {
           return (
@@ -64,7 +73,7 @@ const PullDown: NextProps<PullDownProps> = ({
       </Select>
       {!errorText && <HelperText text={helperText} />}
       <ErrorText text={errorText} />
-    </div>
+    </InputContainer>
   );
 };
 
