@@ -7,7 +7,7 @@ import { Company } from '~/model/entity';
 import { useFetchCompany } from '~/model/repository/firestore/company/fetch';
 import { useCreateStore } from '~/model/repository/firestore/store/create';
 import geohash from 'ngeohash';
-import { useFetchGeocode } from '~/model/repository/google/geocode';
+import { useFetchGeocode } from '~/model/repository/google/map/geocode';
 
 export const useStoreCreateUseCase = () => {
   const methods = useForm<StoreFormValue>();
