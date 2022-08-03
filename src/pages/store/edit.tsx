@@ -2,7 +2,14 @@ import type { NextPage } from 'next';
 import { FormProvider } from 'react-hook-form';
 import Loading from 'react-loading';
 import styled from 'styled-components';
-import { Button, ConfirmModal, ErrorText, RhfTextInput } from '~/components';
+import {
+  Button,
+  ConfirmModal,
+  ErrorText,
+  RhfPullDown,
+  RhfTextInput,
+} from '~/components';
+import { Prefectures } from '~/model/master/prefecture';
 import { useStoreEditUseCase } from '~/model/usecase';
 import { StoreFormValue } from '~/types/common';
 
@@ -119,13 +126,14 @@ const CompanyCreate: NextPage = () => {
                     required: '郵便番号を入力してください',
                   },
                   defaultValue: store?.postCode,
+                  disabled: true,
                 }}
                 width='100%'
               />
-              <RhfTextInput<StoreFormValue>
+              <RhfPullDown<StoreFormValue>
                 name='prefecture'
                 labelProps={{ children: '都道府県' }}
-                inputProps={{
+                selectProps={{
                   rules: {
                     maxLength: {
                       message: '都道府県を入力してください',
@@ -133,9 +141,14 @@ const CompanyCreate: NextPage = () => {
                     },
                     required: '都道府県を入力してください',
                   },
+
                   defaultValue: store?.prefecture,
+                  disabled: true,
                 }}
-                width='100%'
+                width='calc(50% - 5px)'
+                options={Object.values(Prefectures).map((p) => {
+                  return { label: p, value: p };
+                })}
               />
             </RowContainer>
             <RhfTextInput<StoreFormValue>
@@ -150,8 +163,9 @@ const CompanyCreate: NextPage = () => {
                   required: '市区町村を入力してください',
                 },
                 defaultValue: store?.municipality,
+                disabled: true,
               }}
-              width='50%'
+              width='calc(50% - 5px)'
               margin='24px 0 0 0'
             />
             <RhfTextInput<StoreFormValue>
@@ -166,8 +180,9 @@ const CompanyCreate: NextPage = () => {
                   required: '番地を入力してください',
                 },
                 defaultValue: store?.block,
+                disabled: true,
               }}
-              width='50%'
+              width='calc(50% - 5px)'
               margin='24px 0 0 0'
             />
             <RhfTextInput<StoreFormValue>
@@ -181,8 +196,9 @@ const CompanyCreate: NextPage = () => {
                   },
                 },
                 defaultValue: store?.buildingName,
+                disabled: true,
               }}
-              width='50%'
+              width='calc(50% - 5px)'
               margin='24px 0 0 0'
             />
 

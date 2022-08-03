@@ -59,6 +59,7 @@ const RHFPullDown = <TFormValues extends FieldValues>({
       setValue(name, defaultValue);
     }
   }, [defaultValue, name, setValue]);
+  console.log(options);
 
   return (
     <PullDown

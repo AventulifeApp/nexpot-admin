@@ -54,6 +54,7 @@ export const useStoreListUseCase = () => {
       return {
         key: store.id,
         data: [
+          { align: 'center', content: store.companyName },
           { align: 'center', content: store.name },
           { align: 'center', content: store.phone },
           { align: 'left', content: store.address },

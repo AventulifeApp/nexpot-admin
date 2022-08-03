@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { auth } from '~/lib/firebase';
 import { useForm } from 'react-hook-form';
-import { GEOCODE_ENDPOINT } from '~/constants/constants';
 import { StoreFormValue } from '~/types/common';
 import { Company } from '~/model/entity';
 import { useFetchCompany } from '~/model/repository/firestore/company/fetch';
 import { useCreateStore } from '~/model/repository/firestore/store/create';
 import geohash from 'ngeohash';
+import { useFetchGeocode } from '~/model/repository/google/map/geocode';
 
 export const useStoreCreateUseCase = () => {
   const methods = useForm<StoreFormValue>();
@@ -19,6 +18,7 @@ export const useStoreCreateUseCase = () => {
   const fetchCompany = useFetchCompany();
   const createStore = useCreateStore();
   const router = useRouter();
+  const fetchGeocode = useFetchGeocode();
   const companyId = router.query.companyId;
 
   useEffect(() => {
@@ -37,14 +37,7 @@ export const useStoreCreateUseCase = () => {
   const handleSubmit = methods.handleSubmit(async (values) => {
     try {
       const address = `${values.postCode} ${values.prefecture} ${values.municipality} ${values.block} ${values.buildingName}`;
-      const results = await axios.get(GEOCODE_ENDPOINT, {
-        params: {
-          address,
-          key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API,
-          region: 'JP',
-          language: 'ja',
-        },
-      });
+      const results = await fetchGeocode(address);
       const data = results.data;
       const result = data.results[0];
 
