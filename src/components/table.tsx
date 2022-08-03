@@ -5,15 +5,22 @@ import { NextProps } from '~/types/common';
 
 type Align = 'left' | 'center' | 'right';
 type TableHeadeData = { title: string; align?: Align; width?: string };
-type TalbeData = { align?: Align; content: ReactNode | string };
-export type TableType = {
-  tableHeadData: TableHeadeData[];
-  talbeData: TalbeData[][];
+type TalbeData = {
+  key: string;
+  data: { align?: Align; content: ReactNode | string }[];
 };
 
-const Table = styled.table<{ width?: string }>`
+export type TableType = {
+  tableHeadData: TableHeadeData[];
+  talbeData: TalbeData[];
+  width?: string;
+  margin?: string;
+};
+
+const Table = styled.table<{ width?: string; margin?: string }>`
   border-collapse: collapse;
   width: ${(props) => props.width ?? '100%'};
+  ${(props) => props.margin && 'margin: ' + props.margin};
 `;
 const THead = styled.thead`
   border: solid 1px;
@@ -37,9 +44,11 @@ const Td = styled.td<{ align?: Align }>`
 const BaseTable: NextProps<TableType> = ({
   tableHeadData = [],
   talbeData = [],
+  width,
+  margin,
 }) => {
   return (
-    <Table>
+    <Table width={width} margin={margin}>
       <THead>
         <Tr data-testid='head-tr'>
           {tableHeadData.map(({ title, ...attr }, i) => (
@@ -51,8 +60,8 @@ const BaseTable: NextProps<TableType> = ({
       </THead>
       <TBody>
         {talbeData.map((row, i) => (
-          <Tr key={i} isOdd={i % 2 === 0} data-testid='body-tr'>
-            {row.map(({ content, ...attr }, j) => {
+          <Tr key={row.key} isOdd={i % 2 === 0} data-testid='body-tr'>
+            {row.data.map(({ content, ...attr }, j) => {
               return (
                 <Td key={j} {...attr} data-testid={`body-td${i}${j}`}>
                   {content}

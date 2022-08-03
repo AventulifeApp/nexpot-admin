@@ -48,29 +48,34 @@ export const useCompanyListUseCase = () => {
       workCompanyList = workCompanyList.slice(0, -1);
     }
     const list = workCompanyList.map((company) => {
-      return [
-        { align: 'center', content: company.name },
-        { align: 'center', content: company.phone },
-        {
-          align: 'right',
-          content: (
-            <Link href={`/company/edit?companyId=${company.id}`}>編集画面</Link>
-          ),
-        },
-        {
-          align: 'center',
-          content: (
-            <IconWrapper>
-              <AiFillDelete
-                onClick={() => {
-                  setDeleteCompanyId(company.id);
-                  setShowModal(true);
-                }}
-              />
-            </IconWrapper>
-          ),
-        },
-      ];
+      return {
+        key: company.id,
+        data: [
+          { align: 'center', content: company.name },
+          { align: 'center', content: company.phone },
+          {
+            align: 'right',
+            content: (
+              <Link href={`/company/edit?companyId=${company.id}`}>
+                編集画面
+              </Link>
+            ),
+          },
+          {
+            align: 'center',
+            content: (
+              <IconWrapper>
+                <AiFillDelete
+                  onClick={() => {
+                    setDeleteCompanyId(company.id);
+                    setShowModal(true);
+                  }}
+                />
+              </IconWrapper>
+            ),
+          },
+        ],
+      };
     });
 
     return list as TableType['talbeData'];

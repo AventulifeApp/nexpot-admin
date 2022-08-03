@@ -25,3 +25,9 @@ export const BUTTON_COLORS = {
 
 export const GEOCODE_ENDPOINT =
   'https://maps.googleapis.com/maps/api/geocode/json';
+
+export const STORE_MENU_TYPES = [
+  'rental-cycle',
+  'store-user',
+  'sightseeing-route',
+] as const;

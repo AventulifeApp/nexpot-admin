@@ -31,11 +31,11 @@ const Content = styled.li`
 const sideBarDatas = [
   { title: '契約会社', link: '/company/list' },
   { title: '店舗', link: '/company/select' },
-  { title: 'レンタサイクル置場', link: '/store/select?menu=rentalCycle' },
-  { title: '店舗権限ユーザー', link: '/store/select?menu=storeUser' },
+  { title: 'レンタサイクル置場', link: '/store/select?menu=rental-cycle' },
+  { title: '店舗権限ユーザー', link: '/store/select?menu=store-user' },
   {
     title: '観光ルート',
-    link: '/store/select?menu=sightseeingRoute',
+    link: '/store/select?menu=sightseeing-route',
     roleUrl: '/sightseeingRoute/list',
   },
 ];
