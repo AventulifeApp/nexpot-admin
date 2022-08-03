@@ -35,7 +35,7 @@ export const useCompanySelectUseCase = () => {
     if (pageInfo.limit < workCompanyList.length) {
       workCompanyList = workCompanyList.slice(0, -1);
     }
-    const list = workCompanyList.map((company) => {
+    const list = workCompanyList.map((company, i) => {
       return {
         key: company.id,
         data: [
