@@ -108,24 +108,33 @@ const Home: NextPage = () => {
             { title: '削除', align: 'center' },
           ]}
           talbeData={[
-            [
-              { align: 'center', content: <>aaaa</> },
-              { align: 'left', content: 'fjlsdfjsdlkf' },
-              { align: 'right', content: <a href=''>編集画面</a> },
-              { align: 'center', content: <input type={'checkbox'} /> },
-            ],
-            [
-              { align: 'left', content: <></> },
-              { align: 'left', content: 'fjlsdfjsdlkf' },
-              { align: 'right', content: <a href=''>編集画面</a> },
-              { align: 'center', content: <input type={'checkbox'} /> },
-            ],
-            [
-              { align: 'left', content: <></> },
-              { align: 'left', content: 'fjlsdfjsdlkf' },
-              { align: 'right', content: <a href=''>編集画面</a> },
-              { align: 'center', content: <input type={'checkbox'} /> },
-            ],
+            {
+              key: '1',
+              data: [
+                { align: 'center', content: <>aaaa</> },
+                { align: 'left', content: 'fjlsdfjsdlkf' },
+                { align: 'right', content: <a href=''>編集画面</a> },
+                { align: 'center', content: <input type={'checkbox'} /> },
+              ],
+            },
+            {
+              key: '2',
+              data: [
+                { align: 'left', content: <></> },
+                { align: 'left', content: 'fjlsdfjsdlkf' },
+                { align: 'right', content: <a href=''>編集画面</a> },
+                { align: 'center', content: <input type={'checkbox'} /> },
+              ],
+            },
+            {
+              key: '3',
+              data: [
+                { align: 'left', content: <></> },
+                { align: 'left', content: 'fjlsdfjsdlkf' },
+                { align: 'right', content: <a href=''>編集画面</a> },
+                { align: 'center', content: <input type={'checkbox'} /> },
+              ],
+            },
           ]}
         />
         <ConfirmModal
