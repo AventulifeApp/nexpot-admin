@@ -39,6 +39,7 @@ const Input = styled.input<{ width: string }>`
   width: ${(props) => props.width};
   padding: 8px;
   box-sizing: border-box;
+  ${(props) => props.disabled && `background-color: ${props.theme.gray300};`};
 `;
 
 const TextInput: NextProps<TextInputProps> = ({

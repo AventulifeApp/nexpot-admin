@@ -1,13 +1,20 @@
+import { GeoPosition } from '~/types/common';
+
 export type Store = {
   id: string;
   uid: string;
   companyId: string;
   name: string;
   companyName: string;
+  phone: string;
   address: string;
-  longitude: number;
-  latitude: number;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
+  postCode: string;
+  prefecture: string;
+  municipality: string;
+  block: string;
+  buildingName: string;
+  position: GeoPosition;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 };
